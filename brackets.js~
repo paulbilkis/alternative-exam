@@ -1,0 +1,37 @@
+/*
+Генерирует массив всех возможных правильных скобочных представлений в лексикографическом порядке c n открывающих скобочек
+*/
+function gen (n)
+{
+    var brackets = [];
+    brackets[0] = []; // первое представление это ((...))
+    for (var i = 0; i < n; i++){
+	brackets[0][i] = 1; // открывающие
+    }
+    for (i<2*n; i++){
+	brackets[0][i] = 0; // закрывающие
+    }
+}
+
+/*
+Следующая в лексикографическом порядке скобочная последовательность
+*/
+function next_sequence (last){
+    var n = last.length;
+    var next_br = [];
+    for (var i = n-1, depth = 0; i >= 0; i--){
+	if (last[i] == 1){
+	    depth--;
+	}else{
+	    depth++;
+	}
+	if (last[i] == 1 && depth > 0){
+	    depth--;
+	    var open = (n-i-1 - depth)/2;
+	    var close = n-i-1 - open;
+	    next_br = (((last.slice (0, i)).push(0)).fill(1, i+2, open+1)).fill(0, open+2, close+1);
+	    break;
+	}
+    }
+    return next_br;
+}

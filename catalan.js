@@ -7,7 +7,7 @@ function catalan(n){
     
     for (var i=1; i<=n; i++){
 	C[i] = 0;
-	for (int k=0; k<i; k++){
+	for (var k=0; k<i; k++){
 	    C[i] += C[k]*C[i-1-k]; 
 	}
     }
