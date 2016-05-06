@@ -16,6 +16,16 @@ function print_brackets (br)
 }
 
 /*
+Сравнение двух скобочных представлений
+*/
+function compare_brackets (br1, br2){
+    for (var i = 0; i<br1.length; i++){
+	if (br1[i] != br2[i]) return false;
+    }
+    return true;
+}
+
+/*
 Копирование двухмерного массива 
 */
 function copy_brackets (br){
