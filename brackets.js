@@ -102,9 +102,15 @@ var brackets = gen(3);
 var another = [];
 another = copy_brackets(brackets);
 shuffle(another);
-for (var i=0; i<brackets.length; i++)
-    print_brackets (brackets[i]);
+
+/*for (var i=0; i<brackets.length; i++){
+   
+    draw_bin_tree (brackets[i]);
+    element = element.cloneNode(true);
+    element = document.body.appendChild(element);
+}
 shuffle(brackets);
 for (var i=0; i<another.length; i++)
     print_brackets (another[i]);
 
+*/
