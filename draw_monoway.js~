@@ -1,0 +1,4 @@
+function draw_a_square (n){
+    var len = 10; // длина одной клетки
+    ctx.strokeRect(0,0, len*n, len*n);
+}

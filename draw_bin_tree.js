@@ -46,10 +46,10 @@ function draw_a_child(x, y, side, data, ctx){
     }
 }
 
-  var example = document.getElementById("canvas");
+ /* var example = document.getElementById("canvas");
       ctx = example.getContext("2d");
 radius = 10;
-draw_bin_tree ([1,1,1,0,0,0]);
+draw_bin_tree ([1,1,1,0,0,0]);*/
 /*
 draw_a_node ({x: 50, y: 50}, 0, ctx);
 draw_a_child (50, 50, "left", 1, ctx);
@@ -62,9 +62,9 @@ draw_a_child (80, 80, "right", 4, ctx);
 Рисует бинарное дерево из скобочного представления
 */
 function draw_bin_tree (br){
-    var levels = [], x=150,y=150; // хранение статуса занятости уровней и их координаты
-    levels[0] = {x: 150, y: 150, right:0};
-    draw_a_node ({x: 150, y: 150}, 0, ctx);
+    var levels = [], x=150,y=10; // хранение статуса занятости уровней и их координаты
+    levels[0] = {x: 150, y: 10, right:0};
+    draw_a_node ({x: 150, y: 10}, 0, ctx);
     lvl = 0;
     for (var i = 0; i < br.length; i++){
 	if (br[i] == 1){
@@ -97,4 +97,13 @@ function draw_bin_tree (br){
 	    }
 	}
     }
+}
+
+function draw_bin_tree_canvas(br, element){
+    var canvas = document.createElement("canvas");
+    ctx = canvas.getContext("2d");
+    canvas.width = 300;
+    canvas.heigth = 300;
+    element.appendChild(canvas);
+    draw_bin_tree (brackets[i]);
 }
