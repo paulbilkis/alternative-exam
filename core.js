@@ -44,13 +44,32 @@ function gen_menu (){
     }
 }
 
+function demo (inter1, inter2){
+    ;
+}
+
+function trainer (inter1, inter2){
+    var layer1 = document.createElement("div");
+    var layer2 = document.createElement("div");
+    layer1.className = "layer1";
+    layer2.className = "layer2";
+    document.getElementById("content").appendChild(layer1);
+    document.getElementById("content").appendChild(layer2);;
+}
+
+function control (inter1, inter2){
+    ;
+}
+
 function handler (form){
     var inter1 = form.inter1.options[form.inter1.selectedIndex].value;
     var inter2 = form.inter2.options[form.inter2.selectedIndex].value;
     var mode = form.mode.options[form.mode.selectedIndex].value;
-    console.log(inter1, inter2, mode);
-}
-
-function demo (a, b){
-    alert (a, b);
+    if (mode == "demo"){
+	demo(inter1, inter2);
+    }else if (mode == "trainer"){
+	trainer(inter1, inter2);
+    }else{
+	control(inter1, inter2);
+    }
 }
