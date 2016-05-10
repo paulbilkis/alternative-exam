@@ -98,20 +98,4 @@ function next_sequence (last){
     return next_br;
 }
 
-/*var brackets = gen(3);
-var another = [];
-another = copy_brackets(brackets);
-shuffle(another);*/
-// var example = document.getElementById("canvas");
-  //    ctx = example.getContext("2d");
-/*radius = 10;
-//draw_bin_tree ([1,1,1,0,0,0]);
-for (var i=0; i<brackets.length; i++){
-    draw_bin_tree_canvas(brackets[i], document.body);
-}
-shuffle(brackets);
-for (var i=0; i<another.length; i++)
-    print_brackets (another[i]);
-*/
-
 

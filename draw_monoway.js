@@ -1,5 +1,7 @@
-    var x=0,y=0;
-    var len = 50; // длина одной клетки
+    var x=0,y=0; // начальные координаты
+var len = 50; // длина одной клетки
+
+/* Рисует квадрат в клетку */
 function draw_a_square (n){
     ctx.strokeRect(x,y, len*n, len*n);
     for (var i = 1; i<n; i++){
@@ -19,6 +21,7 @@ function draw_a_square (n){
     ctx.restore();
 }
 
+/* Рисует в квадрате монотонный путь */
 function draw_a_monoway (br, ctx){
     var n = br.length/2;
     var x = 0, y=len*n;
@@ -42,6 +45,7 @@ function draw_a_monoway (br, ctx){
     ctx.restore();
 }
 
+/* Рисует интерпретацию по скобкам br, в элементе element, присваивает интерпретации id=id*/
 function draw_a_monoway_canvas (br, element, id){
     var canvas = document.createElement("canvas");
     ctx = canvas.getContext("2d");

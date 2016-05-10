@@ -196,9 +196,3 @@
    .clear {
     clear: left; /* Отмена обтекания */
    }
-
-   .moveit {
-           
-    top:0;     left:0;     
-    transition: 0.5s top ease-in; 
-   }

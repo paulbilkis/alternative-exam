@@ -1,5 +1,6 @@
 radius = 10;
 lvl=0;
+/* Рисует сам узёл */
 function draw_a_node (node, data, ctx){
     ctx.beginPath();
     ctx.arc(node.x, node.y, radius, 0, Math.PI*2,true);
@@ -17,6 +18,7 @@ function coordinates_right_child (x, y){
     return {x: (x+15*radius/(2*lvl+1)), y: (y+radius*(lvl+0.5))};
 }
 
+/* Рисует связку  */
 function draw_a_connection (parent, child){
     if (child.x < parent.x){
 	// left
@@ -37,7 +39,8 @@ function draw_a_connection (parent, child){
 	ctx.lineTo (x_dest, y_dest);
 	ctx.stroke();
 }
-      
+
+/* Рисует наследника */
 function draw_a_child(x, y, side, data, ctx){
     if (side == "left"){
 	draw_a_node (coordinates_left_child (x, y), data, ctx);
@@ -48,17 +51,6 @@ function draw_a_child(x, y, side, data, ctx){
     }
 }
 
- /* var example = document.getElementById("canvas");
-      ctx = example.getContext("2d");
-radius = 10;
-draw_bin_tree ([1,1,1,0,0,0]);*/
-/*
-draw_a_node ({x: 50, y: 50}, 0, ctx);
-draw_a_child (50, 50, "left", 1, ctx);
-draw_a_child (50, 50, "right", 2, ctx);
-draw_a_child (80, 80, "left", 3, ctx);
-draw_a_child (80, 80, "right", 4, ctx);
-/*
 
 /*
 Рисует бинарное дерево из скобочного представления
@@ -92,7 +84,6 @@ function draw_bin_tree (br){
 		    draw_a_child (levels[j].x, levels[j].y, "right", i+1, ctx);
 
 		    levels[j].right = 1;
-		        console.log(x, y, i+1, c.x, c.y);
 		    x = c.x;
 		    y = c.y;
 		
@@ -108,6 +99,7 @@ function draw_bin_tree (br){
     }
 }
 
+/* Отрисовка интерпретации по скобкам br, в элемент element, канвас будет иметь id=id*/
 function draw_bin_tree_canvas(br, element, id){
     var canvas = document.createElement("canvas");
     ctx = canvas.getContext("2d");
