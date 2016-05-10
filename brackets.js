@@ -64,8 +64,8 @@ function gen (n)
     for (;i<2*n; i++){
 	brackets[0][i] = 0; // закрывающие
     }
-
-    for (var i = 1; i < catalan(n); i++){
+    var cat = gen_catalan(n);
+    for (var i = 1; i < cat; i++){
 	brackets[i] = next_sequence (brackets[i-1]);
     }
 
@@ -98,10 +98,10 @@ function next_sequence (last){
     return next_br;
 }
 
-var brackets = gen(3);
+/*var brackets = gen(3);
 var another = [];
 another = copy_brackets(brackets);
-shuffle(another);
+shuffle(another);*/
 // var example = document.getElementById("canvas");
   //    ctx = example.getContext("2d");
 /*radius = 10;

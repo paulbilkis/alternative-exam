@@ -1,3 +1,5 @@
+radius = 10;
+lvl=0;
 function draw_a_node (node, data, ctx){
     ctx.beginPath();
     ctx.arc(node.x, node.y, radius, 0, Math.PI*2,true);
@@ -8,11 +10,11 @@ function draw_a_node (node, data, ctx){
 }
 
 function coordinates_left_child (x, y){
-    return {x: (x-3*radius), y: (y+3*radius)};
+    return {x: (x-15*radius/(2*lvl+1)), y: (y+1*radius*(lvl+0.5))};
  }
 
 function coordinates_right_child (x, y){
-    return {x: (x+3*radius), y: (y+3*radius)};
+    return {x: (x+15*radius/(2*lvl+1)), y: (y+radius*(lvl+0.5))};
 }
 
 function draw_a_connection (parent, child){
@@ -62,26 +64,33 @@ draw_a_child (80, 80, "right", 4, ctx);
 Рисует бинарное дерево из скобочного представления
 */
 function draw_bin_tree (br){
+    var radius = 10;
     var levels = [], x=150,y=10; // хранение статуса занятости уровней и их координаты
     levels[0] = {x: 150, y: 10, right:0};
     draw_a_node ({x: 150, y: 10}, 0, ctx);
     lvl = 0;
     for (var i = 0; i < br.length; i++){
 	if (br[i] == 1){
+	    lvl++;
 	    // рисуем ветвь влево, нумеруем i+1
 	    var c = coordinates_left_child (x, y);
+	    
 	    draw_a_child (x, y, "left", i+1, ctx);
+
 	    //console.log(x, y, i+1);
-	    levels[lvl+1] = {x: c.x, y: c.y, right: 0};
+	    levels[lvl] = {x: c.x, y: c.y, right: 0};
 	    x = c.x;
 	    y = c.y;
-	    lvl++;
+	    
 	}else{
 	    for (var j=lvl-1;j>=0; j--){ // j по итогу - номер ближайшего свободного уровня
 		// рисуем на этом уровне ветвь вправо
 		if (levels[j].right == 0){
+		    lvl = j+1;
 		    var c = coordinates_right_child (levels[j].x, levels[j].y);
+
 		    draw_a_child (levels[j].x, levels[j].y, "right", i+1, ctx);
+
 		    levels[j].right = 1;
 		        console.log(x, y, i+1, c.x, c.y);
 		    x = c.x;
@@ -99,11 +108,12 @@ function draw_bin_tree (br){
     }
 }
 
-function draw_bin_tree_canvas(br, element){
+function draw_bin_tree_canvas(br, element, id){
     var canvas = document.createElement("canvas");
     ctx = canvas.getContext("2d");
     canvas.width = 300;
-    canvas.heigth = 300;
+    canvas.height = 300;
+    canvas.id = id;
     element.appendChild(canvas);
-    draw_bin_tree (brackets[i]);
+    draw_bin_tree (br);
 }

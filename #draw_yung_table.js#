@@ -23,7 +23,7 @@
 function gen_yung_table (br, el, id){
     var table = document.createElement("table");
     table.border = "1";
-    table.cellPadding = '5';
+    table.cellPadding = '5';и
     table.rules = "groups";
     table.id = id;
     el.appendChild(table);

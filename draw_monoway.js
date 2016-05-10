@@ -19,7 +19,7 @@ function draw_a_square (n){
     ctx.restore();
 }
 
-function draw_a_monoway (br){
+function draw_a_monoway (br, ctx){
     var n = br.length/2;
     var x = 0, y=len*n;
     draw_a_square(n);
@@ -40,4 +40,14 @@ function draw_a_monoway (br){
     }
     ctx.stroke();
     ctx.restore();
+}
+
+function draw_a_monoway_canvas (br, element, id){
+    var canvas = document.createElement("canvas");
+    ctx = canvas.getContext("2d");
+    canvas.width = 300;
+    canvas.height = 300;
+    canvas.id = id;
+    element.appendChild(canvas);
+    draw_a_monoway (br, ctx);
 }
