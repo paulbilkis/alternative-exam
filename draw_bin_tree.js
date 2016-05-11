@@ -55,11 +55,11 @@ function draw_a_child(x, y, side, data, ctx){
 /*
 Рисует бинарное дерево из скобочного представления
 */
-function draw_bin_tree (br){
+function draw_bin_tree (br, w, h){
     var radius = 10;
-    var levels = [], x=150,y=10; // хранение статуса занятости уровней и их координаты
-    levels[0] = {x: 150, y: 10, right:0};
-    draw_a_node ({x: 150, y: 10}, 0, ctx);
+    var levels = [], x=150,y=15; // хранение статуса занятости уровней и их координаты
+    levels[0] = {x: x, y: y, right:0};
+    draw_a_node ({x: x, y: y}, 0, ctx);
     lvl = 0;
     for (var i = 0; i < br.length; i++){
 	if (br[i] == 1){
@@ -103,8 +103,8 @@ function draw_bin_tree (br){
 function draw_bin_tree_canvas(br, element, id){
     var canvas = document.createElement("canvas");
     ctx = canvas.getContext("2d");
-    canvas.width = 300;
-    canvas.height = 300;
+   /* canvas.width = 70*(br.length/2);
+    canvas.height = 70*(br.length/2);*/
     canvas.id = id;
     element.appendChild(canvas);
     draw_bin_tree (br);

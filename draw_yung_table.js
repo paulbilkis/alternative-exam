@@ -22,11 +22,14 @@
 
 function gen_yung_table (br, el, id){
     var table = document.createElement("table");
+     el.appendChild(table);
     table.border = "1";
-    table.cellPadding = '5';
+    table.className = "yung";
+    table.style = "font-size: 20px";
+    
     table.rules = "groups";
     table.id = id;
-    el.appendChild(table);
+   
     var tr1=null, tr2=null, td;
     for (var i = 0; i<br.length; i++){
 

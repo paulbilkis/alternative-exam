@@ -1,4 +1,4 @@
-var inter1_light=null,inter2_light=null, brackets1=[], brackets2=[];
+var inter1_light=null,inter2_light=null, brackets1=[], brackets2=[], el_change=null;
 var showAnswerIm = false; // показывать ли правильность выбора в тренажёре
 
 /*
@@ -77,35 +77,42 @@ function demo (inter1, inter2){
     ;
 }
 
+function checkAnswers(){
+    var table = document.getElementById("trainer");
+    for (var i = 0; i<table.childNodes.length; i++){
+	if (compare_brackets(brackets1[table.childNodes[i].cells[0].firstChild.id], brackets2[table.childNodes[i].cells[2].firstChild.id-100])){
+	    if (showAnswerIm){
+		table.childNodes[i].style.backgroundColor="green";
+	    }else{
+		continue;
+	    }
+	}else{
+	    if (showAnswerIm){
+		table.childNodes[i].style.backgroundColor="red";
+	    }else{
+		break;
+	    }
+	}
+    }
+}
+
 /* Функция, отвечающая за выбор элементов мышкой. Выбрать можно лишь один элемент в столбце, когда выбирается двое, соответственно, в inter1_light и inter2_light помещаются id выбранных интерпретаций (второй id для однозначности индетификатора в структуре html больше нужного на 100), выбранные интерпретации сравниваются, затем действие варьируется взависимости от showAnswerIm (тренажёр или контроль). Если контроль, то результат сохраняется в массив, затем по кнопке проверяется и сообщается результат.*/
 function setOn (el){ // по onlick происходит
-    if (el.parentNode.className == 'layer1'){
-	if (inter1_light == null){
-	    inter1_light = el.id; // включаем элемент
-	    el.style.border = "dashed 5px navy";
-	    if (inter2_light != null){ // если второй тоже выбран 
-		if (compare_brackets(brackets1[inter1_light], brackets2[inter2_light-100]))// проверяем правильность соответствия
-		    alert("Верно!");
-		else
-		    alert("Ошибка!");
-	    }
-	}else if (inter1_light == el.id){
-	    inter1_light = null; // выключаем элемент
-	    el.style.border = "none";
-	}
-    }else if(el.parentNode.className == 'layer2'){
-	if (inter2_light == null){
-	    inter2_light = el.id; // включаем элемент
-	    el.style.border = "dashed 5px navy";
-	     if (inter1_light != null){ // проверяем правильность соответствия
-		if (compare_brackets(brackets1[inter1_light], brackets2[inter2_light-100]))
-		    alert("Верно!");
-		else
-		    alert("Ошибка!");
-	     }
-	}else if (inter2_light == el.id){
-	    inter2_light = null; // выключаем элемент
-	    el.style.border = "none";
+    if (el_change == null){
+	el_change = el.id;
+	el.parentNode.style.border="2px solid navy";
+    }else if (el.id == el_change){
+	el_change = null;
+	el.parentNode.style.border="2px solid navy";
+    }else if (el_change != null && document.getElementById(el_change).parentNode.className == el.parentNode.className){
+	var tmp1 = document.getElementById(el_change).parentNode;
+	el.parentNode.appendChild(document.getElementById(el_change));
+	tmp1.appendChild(el);
+	el_change = null;
+	tmp1.style.border="";
+	el.style.border="";
+	if (showAnswerIm){
+	    checkAnswers();
 	}
     }
 }
@@ -118,14 +125,11 @@ n - номер числа каталана
 
 function trainer (inter1, inter2, n){
     clear_block("content");
-    var layer1 = document.createElement("div");
-    var layer2 = document.createElement("div");
-    layer1.className = "layer1";
-    layer2.className = "layer2";
-    document.getElementById("content").appendChild(layer1);
-    document.getElementById("content").appendChild(layer2);
-    
-
+    var table = document.createElement("table");
+    document.getElementById("content").appendChild(table);
+    table.border = "1px";
+    table.className = "trainer";
+    table.id="trainer";
     brackets1 = gen(n); // получаем скобочные представления
     shuffle(brackets1); // перемешиваем
     brackets2 = copy_brackets(brackets1); // копируем во второй массив
@@ -133,8 +137,23 @@ function trainer (inter1, inter2, n){
 
     // отрисовка двух колонок двумя разными интерпретациями
     for (var i=0; i<brackets1.length; i++){
-	interpretations[inter1].draw(brackets1[i], layer1, i);
-	interpretations[inter2].draw(brackets2[i], layer2, i+100);
+	var td1 = document.createElement("td");
+	var td2 = document.createElement("td");
+	td2.className = "bijection";
+	td1.className = "layer1";
+	
+	var td3 = document.createElement("td");
+	td3.className = "layer2";
+	td2.innerHTML = "<=>";
+	var tr = document.createElement("tr");
+	table.appendChild(tr);
+//	td1.id=i;
+//	td3.id=i+100;
+	tr.appendChild(td1);
+	tr.appendChild(td2);
+	tr.appendChild(td3);
+	interpretations[inter1].draw(brackets1[i], td1, i);
+	interpretations[inter2].draw(brackets2[i], td3, i+100);
     }
 
     // задаём действие по клику на интерпретации
@@ -158,6 +177,7 @@ function handler (form){
     if (mode == "demo"){
 	demo(inter1, inter2);
     }else if (mode == "trainer"){
+	showAnswerIm=true;
 	trainer(inter1, inter2, 3);
     }else{
 	control(inter1, inter2);

@@ -49,8 +49,8 @@ function draw_a_monoway (br, ctx){
 function draw_a_monoway_canvas (br, element, id){
     var canvas = document.createElement("canvas");
     ctx = canvas.getContext("2d");
-    canvas.width = 300;
-    canvas.height = 300;
+    canvas.width = len*br.length/2 +1;
+    canvas.height = len*br.length/2 +1;
     canvas.id = id;
     element.appendChild(canvas);
     draw_a_monoway (br, ctx);

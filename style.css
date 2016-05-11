@@ -181,18 +181,28 @@
 		    display: none;
 		}
 
-		 .layer1 {
-  /*  background-color: #fc0;  Цвет фона слоя */
-    padding: 5px; /* Поля вокруг текста */
-    float: left; /* Обтекание по правому краю */
-    width: 30%; /* Ширина слоя */
-   }
-   .layer2 {
-   /* background-color: #c0c0c0;  Цвет фона слоя */
-    padding: 5px; /* Поля вокруг текста */
-    width: 30%; /* Ширина слоя */
-    float: left; /* Обтекание по правому краю */
-   }
+
    .clear {
     clear: left; /* Отмена обтекания */
    }
+.trainer{
+    border-collapse: collapse; /* Убираем двойные границы между ячейками */
+    border: 1px solid #000; /* Рамка вокруг таблицы */
+}
+
+.trainer td{
+    padding: 10px;
+}
+
+.yung td{
+    font-size: 20px;
+    padding: 10px;
+}
+
+.bijection{
+    font-size: 40px;
+}
+
+.trainer .selected{
+    backround: #000;
+}
