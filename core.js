@@ -79,6 +79,7 @@ function demo (inter1, inter2){
 
 function checkAnswers(){
     var table = document.getElementById("trainer");
+    var result = document.getElementById("result");
     for (var i = 0; i<table.childNodes.length; i++){
 	if (compare_brackets(brackets1[table.childNodes[i].cells[0].firstChild.id], brackets2[table.childNodes[i].cells[2].firstChild.id-100])){
 	    if (showAnswerIm){
@@ -90,10 +91,12 @@ function checkAnswers(){
 	    if (showAnswerIm){
 		table.childNodes[i].style.backgroundColor="red";
 	    }else{
-		break;
+		result.innerHTML='<p>В одной или нескольких парах не было использовано предложенное взаимно-однозначного соотношение. Пожалуйста, если вы придумали собственное верное однозначное правило (т.е. однозначно работающее в обе стороны), напишите мне на <a href="mailto:p.bilkis@gmail.com">почту</a></p>';
+		return;
 	    }
 	}
     }
+    result.innerHTML='<p>Все взаимно-однозначные соотношения указаны верно!</p>';
 }
 
 /* Функция, отвечающая за выбор элементов мышкой. Выбрать можно лишь один элемент в столбце, когда выбирается двое, соответственно, в inter1_light и inter2_light помещаются id выбранных интерпретаций (второй id для однозначности индетификатора в структуре html больше нужного на 100), выбранные интерпретации сравниваются, затем действие варьируется взависимости от showAnswerIm (тренажёр или контроль). Если контроль, то результат сохраняется в массив, затем по кнопке проверяется и сообщается результат.*/
