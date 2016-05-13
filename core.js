@@ -1,4 +1,4 @@
-var inter1_light=null,inter2_light=null, brackets1=[], brackets2=[], el_change=null;
+var inter1_light=null,inter2_light=null, brackets1=[], brackets2=[], el_change=null, thereWasCheck=false;
 var showAnswerIm = false; // показывать ли правильность выбора в тренажёре
 
 /*
@@ -77,6 +77,23 @@ function demo (inter1, inter2){
     ;
 }
 
+function deleteCoincidence (){
+    var table = document.getElementById("trainer");
+    var result = document.getElementById("result");
+    for (var i = 0; i<table.childNodes.length; i++){
+	if (compare_brackets(brackets1[table.childNodes[i].cells[0].firstChild.id], brackets2[table.childNodes[i].cells[2].firstChild.id-100])){
+	    if (i > 0)
+		j = i-1;
+	    else
+		j=i+1;
+	    el_change = table.childNodes[j].cells[2].firstChild.id;
+	    setOn(table.childNodes[i].cells[2].firstChild);
+	}
+    }
+    el_change = null;
+
+}
+
 function checkAnswers(){
     var table = document.getElementById("trainer");
     var result = document.getElementById("result");
@@ -96,7 +113,10 @@ function checkAnswers(){
 	    }
 	}
     }
-    result.innerHTML='<p>Все взаимно-однозначные соотношения указаны верно!</p>';
+    if(!showAnswerIm)
+	result.innerHTML='<p>Все взаимно-однозначные соотношения указаны верно!</p>';
+    if(!thereWasCheck)
+	thereWasCheck = true;
 }
 
 /* Функция, отвечающая за выбор элементов мышкой. Выбрать можно лишь один элемент в столбце, когда выбирается двое, соответственно, в inter1_light и inter2_light помещаются id выбранных интерпретаций (второй id для однозначности индетификатора в структуре html больше нужного на 100), выбранные интерпретации сравниваются, затем действие варьируется взависимости от showAnswerIm (тренажёр или контроль). Если контроль, то результат сохраняется в массив, затем по кнопке проверяется и сообщается результат.*/
@@ -106,7 +126,7 @@ function setOn (el){ // по onlick происходит
 	el.parentNode.style.border="2px solid navy";
     }else if (el.id == el_change){
 	el_change = null;
-	el.parentNode.style.border="2px solid navy";
+	el.parentNode.style.border="";
     }else if (el_change != null && document.getElementById(el_change).parentNode.className == el.parentNode.className){
 	var tmp1 = document.getElementById(el_change).parentNode;
 	el.parentNode.appendChild(document.getElementById(el_change));
@@ -114,8 +134,8 @@ function setOn (el){ // по onlick происходит
 	el_change = null;
 	tmp1.style.border="";
 	el.style.border="";
-	if (showAnswerIm){
-	    checkAnswers();
+	if (showAnswerIm && thereWasCheck){
+	   checkAnswers();
 	}
     }
 }
@@ -128,7 +148,9 @@ n - номер числа каталана
 
 function trainer (inter1, inter2, n){
     clear_block("content");
+    thereWasCheck=false;
     var table = document.createElement("table");
+    document.getElementById("content").innerHTML='<br/><input type="button" value="Проверить" onClick="checkAnswers();"><br/><br/>';
     document.getElementById("content").appendChild(table);
     table.border = "1px";
     table.className = "trainer";
@@ -137,7 +159,10 @@ function trainer (inter1, inter2, n){
     shuffle(brackets1); // перемешиваем
     brackets2 = copy_brackets(brackets1); // копируем во второй массив
     shuffle(brackets2); // его тоже перемешиваем
-
+    if (brackets1.length > 10){
+	brackets1 = brackets1.slice(0, 10);
+	brackets2 = brackets2.slice(0, 10);
+    }
     // отрисовка двух колонок двумя разными интерпретациями
     for (var i=0; i<brackets1.length; i++){
 	var td1 = document.createElement("td");
@@ -155,6 +180,7 @@ function trainer (inter1, inter2, n){
 	tr.appendChild(td1);
 	tr.appendChild(td2);
 	tr.appendChild(td3);
+
 	interpretations[inter1].draw(brackets1[i], td1, i);
 	interpretations[inter2].draw(brackets2[i], td3, i+100);
     }
@@ -163,6 +189,16 @@ function trainer (inter1, inter2, n){
     var elements = document.getElementsByTagName("canvas");
     for (var i=0; i<elements.length; i++)
 	elements[i].onclick = function (){setOn(this);};
+    elements = document.getElementsByClassName("yung");
+    for (var i=0; i<elements.length; i++)
+	elements[i].onclick = function (){setOn(this);};
+    var button = document.createElement("input");
+    button.type="button";
+    button.value="Проверить";
+    button.onclick=function(){checkAnswers();};
+    document.getElementById("content").appendChild(document.createElement("br"));
+    document.getElementById("content").appendChild(button);
+    deleteCoincidence();
 }
 
 /* Обёртка для режима "контроль" */
@@ -181,8 +217,12 @@ function handler (form){
 	demo(inter1, inter2);
     }else if (mode == "trainer"){
 	showAnswerIm=true;
+	document.getElementById("main_h2").innerHTML="Тренажёр";
+	document.getElementById("index").innerHTML="<h3>Инструкция</h3><p><ol><li>Кликните один раз на элемент, а затем на другой в том же столбце, чтобы поменять их местами.</li> <li>Переставляя элементы, добейтесь, чтобы слева и справа от значка <=> находились соответствующие друг другу элементы.</li> <li>Нажмите кнопку \"Проверить\". Правильные соответствия подсветятся зеленым, неправильные - красным. </li></ol></p>";
 	trainer(inter1, inter2, 3);
     }else{
+	document.getElementById("main_h2").innerHTML="Контроль";
+	document.getElementById("index").innerHTML="<h3>Инструкция</h3><p><ol><li>Кликните один раз на элемент, а затем на другой в том же столбце, чтобы поменять их местами.</li> <li>Переставляя элементы, добейтесь, чтобы слева и справа от значка <=> находились соответствующие друг другу элементы.</li> <li>Нажмите кнопку \"Проверить\".  </li></ol></p>";
 	control(inter1, inter2);
     }
 }

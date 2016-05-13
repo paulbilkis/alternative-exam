@@ -55,9 +55,14 @@
 		img, a img { border-style: none; }
 
 
-		h1,h2,h3,h4,h5,h6{
+		h1,h2,h4,h5,h6{
 		    font-style: normal;
 		    font-weight:lighter;
+		}
+		h3{
+		    font-style:italic;
+		    font-weight:lighter;
+		    text-decoration:underline;
 		}
 
 		.small { font-size: .9em; }
@@ -134,7 +139,7 @@
 
 			padding: 10px;
 
-			overflow: hidden;
+		/*	overflow: hidden;*/
 
 			}
 
