@@ -49,8 +49,8 @@ function draw_doted_circle (br, ctx){
 function draw_pair_dotes_circle (br, element, id){
     var canvas = document.createElement("canvas");
     ctx = canvas.getContext("2d");
-   canvas.width = 300;
-    canvas.height = 300;
+   canvas.width = 250;
+    canvas.height = 250;
     canvas.id = id;
     element.appendChild(canvas);
     draw_doted_circle (br, ctx);

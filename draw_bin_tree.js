@@ -103,8 +103,8 @@ function draw_bin_tree (br, w, h){
 function draw_bin_tree_canvas(br, element, id){
     var canvas = document.createElement("canvas");
     ctx = canvas.getContext("2d");
-   /* canvas.width = 70*(br.length/2);
-    canvas.height = 70*(br.length/2);*/
+   /* canvas.width = 70*(br.length/2);*/
+    canvas.height = 70*(br.length/2);
     canvas.id = id;
     element.appendChild(canvas);
     draw_bin_tree (br);
