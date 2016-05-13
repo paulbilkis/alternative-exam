@@ -12,14 +12,15 @@
     <script type="text/javascript" src="draw_ntangle.js"></script>
     <script type="text/javascript" src="draw_monoway.js"></script>
     <script type="text/javascript" src="draw_yung_table.js"></script>
-     <script type="text/javascript" src="draw_bin_tree.js"> </script>
+    <script type="text/javascript" src="draw_bin_tree.js"> </script>
+    <script type="text/javascript" src="draw_pair_dotes_circle.js"> </script>
      <script type="text/javascript" src="core.js"></script>
     <!-- this is a comment <canvas id="canvas" width="300" height="300"></canvas>-->
 
 
 </head>
 
-<body>
+<body onload="gen_menu();">
 
 
 
@@ -57,15 +58,11 @@
 			<form>
 			  <p>Взаимно-однозначное соотношение между:</p>
 		  <select name="inter1">
-		    <option value="0">Монотонный путь</option>
-		    <option value="1">Бинарное дерево</option>
-		    <option value="2">Таблицы Юнга</option>
+		   
 		  </select><br/>
 		  <p>и:</p>
 		   <select name="inter2">
-		    <option value="0">Монотонный путь</option>
-		    <option value="1">Бинарное дерево</option>
-		    <option value="2">Таблицы Юнга</option>
+		    
 		   </select><br/><br/>
 		   <p>Режим:</p>
 			<select name="mode" size="3">

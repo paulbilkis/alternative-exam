@@ -15,15 +15,28 @@ draw(brackets, el, id) - для отрисовки одной интепрета
 demo(id) - функция, выводит в div с id описание связи интерпретации со скобками со случайным примером
 */
 var interpretations = [
-    {s: "Монотонные пути обхода", demo: null, draw: null},
+    {s: "Монотонные пути", demo: null, draw: null},
     {s: "Бинарное дерево", demo: null, draw: null},
-    {s: "Таблицы Юнга", demo: null, draw: null}
+    {s: "Таблицы Юнга", demo: null, draw: null},
+    {s: "Пары вершин", demo: null, draw: null}
 ];
 
 interpretations[0].draw = draw_a_monoway_canvas;
 interpretations[1].draw = draw_bin_tree_canvas;
 interpretations[2].draw = gen_yung_table;
+interpretations[3].draw = draw_pair_dotes_circle;
 
+function gen_menu (){
+    var select1 = document.getElementsByName("inter1")[0];
+    var select2 = document.getElementsByName("inter2")[0];
+    for (var i=0; i<interpretations.length; i++){
+	var option = document.createElement("option");
+	option.value = i;
+	option.innerHTML = interpretations[i].s;
+	select1.appendChild(option);
+	select2.appendChild(option.cloneNode(true));
+    }
+}
 
 /*
 Генерация числа Каталана номер n
@@ -54,7 +67,7 @@ function toggle(el) {
 }
 
 /* Старая функция генерации меню, не работает */
-function gen_menu (){
+/*function gen_menu (){
     var menu = document.getElementById("menu"), n=0;
     
     for (var i=0; i<interpretations.length-1; i++){
@@ -70,7 +83,7 @@ function gen_menu (){
 	   // ul.appendChild(li);
 	}
     }
-}
+}*/
 
 /* Обертка для вызова и размещения соответствующих демонстраций */
 function demo (inter1, inter2){
@@ -157,12 +170,12 @@ function trainer (inter1, inter2, n){
     table.id="trainer";
     brackets1 = gen(n); // получаем скобочные представления
     shuffle(brackets1); // перемешиваем
-    brackets2 = copy_brackets(brackets1); // копируем во второй массив
-    shuffle(brackets2); // его тоже перемешиваем
     if (brackets1.length > 10){
 	brackets1 = brackets1.slice(0, 10);
-	brackets2 = brackets2.slice(0, 10);
     }
+    brackets2 = copy_brackets(brackets1); // копируем во второй массив
+    shuffle(brackets2); // его тоже перемешиваем
+    
     // отрисовка двух колонок двумя разными интерпретациями
     for (var i=0; i<brackets1.length; i++){
 	var td1 = document.createElement("td");
