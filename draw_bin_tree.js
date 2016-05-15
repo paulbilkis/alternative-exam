@@ -76,7 +76,7 @@ function draw_a_child(parent, side, data, ctx){
 function draw_bin_tree (br, w, h){
     var radius = 10;
     var levels = [], x=150,y=15; // хранение статуса занятости уровней и их координаты
-    if (br.length > 6)
+   // if (br.length > 6)
 	x = w/2;
     levels[0] = {x: x, y: y, right:0, alpha:0};
     var  alpha=0, a=radius*8, ak = 1.2;
@@ -133,7 +133,9 @@ function draw_bin_tree (br, w, h){
 function draw_bin_tree_canvas(br, element, id){
     var canvas = document.createElement("canvas");
     ctx = canvas.getContext("2d");
-    canvas.width = 100*(br.length/2);
+    canvas.width = 130*(br.length/2);
+    if ((br.length/2) < 4)
+	canvas.width = 130*(br.length/2);
     canvas.height = 70*(br.length/2);
     canvas.id = id;
     element.appendChild(canvas);
