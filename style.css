@@ -32,11 +32,8 @@
 		    font-size: 14px;
 		}
 
-		a { color:#007ca5; text-decoration:none; outline: none; }
+		h1 a { color:#fff; text-decoration:none; outline: none; }
 
-		a:visited { color:#666; }
-
-		a:active { color:#999; }
 
 
 
@@ -210,4 +207,23 @@
 
 .trainer .selected{
     backround: #000;
+}
+
+.br-ts, .br-ts td{
+    border:none;
+}
+.br-tb{
+    font-size:20px;
+}
+
+.br-n{
+    font-size:10px;
+}
+
+.result{
+    border: 1px solid black;
+    padding:10px;
+    font-weight:1.5em;
+    margin-top:10px;
+    display:none;
 }

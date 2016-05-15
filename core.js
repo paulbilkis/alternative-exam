@@ -17,13 +17,16 @@ var interpretations = [
     {s: "Монотонные пути", demo: null, draw: null},
     {s: "Бинарное дерево", demo: null, draw: null},
     {s: "Таблицы Юнга", demo: null, draw: null},
-    {s: "Пары вершин", demo: null, draw: null}
+    {s: "Пары вершин", demo: null, draw: null},
+    {s: "Скобочная запись", demo: null, draw: null}/*,
+    {s: "Триангуляция", demo: null, draw: null}*/
 ];
 
 interpretations[0].draw = draw_a_monoway_canvas;
 interpretations[1].draw = draw_bin_tree_canvas;
 interpretations[2].draw = gen_yung_table;
 interpretations[3].draw = draw_pair_dotes_circle;
+interpretations[4].draw = draw_brackets;
 
 function gen_menu (){
     var select1 = document.getElementsByName("inter1")[0];
@@ -109,6 +112,9 @@ function deleteCoincidence (){
 function checkAnswers(){
     var table = document.getElementById("trainer");
     var result = document.getElementById("result");
+    result.innerHTML="";
+    if (!showAnswerIm)
+	result.style.display="block";
     for (var i = 0; i<table.childNodes.length; i++){
 	if (compare_brackets(brackets1[table.childNodes[i].cells[0].firstChild.id], brackets2[table.childNodes[i].cells[2].firstChild.id-100])){
 	    if (showAnswerIm){
@@ -120,6 +126,7 @@ function checkAnswers(){
 	    if (showAnswerIm){
 		table.childNodes[i].style.backgroundColor="red";
 	    }else{
+		
 		result.innerHTML='<p>В одной или нескольких парах не было использовано предложенное взаимно-однозначного соотношение. Пожалуйста, если вы придумали собственное верное однозначное правило (т.е. однозначно работающее в обе стороны), напишите мне на <a href="mailto:p.bilkis@gmail.com">почту</a></p>';
 		return;
 	    }
@@ -160,6 +167,7 @@ n - номер числа каталана
 
 function trainer (inter1, inter2, n){
     clear_block("content");
+    clear_block("result");
     thereWasCheck=false;
     var table = document.createElement("table");
     document.getElementById("content").innerHTML='<br/><input type="button" value="Проверить" onClick="checkAnswers();"><br/><br/>';
@@ -204,6 +212,9 @@ function trainer (inter1, inter2, n){
     elements = document.getElementsByClassName("yung");
     for (var i=0; i<elements.length; i++)
 	elements[i].onclick = function (){setOn(this);};
+    elements = document.getElementsByClassName("br-ts");
+    for (var i=0; i<elements.length; i++)
+	elements[i].onclick = function (){setOn(this);};
     var button = document.createElement("input");
     button.type="button";
     button.value="Проверить";
@@ -225,6 +236,7 @@ function handler (form){
     var inter1 = form.inter1.options[form.inter1.selectedIndex].value;
     var inter2 = form.inter2.options[form.inter2.selectedIndex].value;
     var mode = form.mode.options[form.mode.selectedIndex].value;
+    result.style.display="none";
     if (mode == "demo"){
 	demo(inter1, inter2);
     }else if (mode == "trainer"){
@@ -232,7 +244,7 @@ function handler (form){
 	document.getElementById("main_h2").innerHTML="Тренажёр";
 	document.getElementById("index").innerHTML="<h3>Инструкция</h3><p><ol><li>Кликните один раз на элемент, а затем на другой в том же столбце, чтобы поменять их местами.</li> <li>Переставляя элементы, добейтесь, чтобы слева и справа от значка <=> находились соответствующие друг другу элементы.</li> <li>Нажмите кнопку \"Проверить\". Правильные соответствия подсветятся зеленым, неправильные - красным. </li></ol></p>";
 	trainer(inter1, inter2, 3);
-    }else{
+    }else if(mode == "control"){
 	document.getElementById("main_h2").innerHTML="Контроль";
 	document.getElementById("index").innerHTML="<h3>Инструкция</h3><p><ol><li>Кликните один раз на элемент, а затем на другой в том же столбце, чтобы поменять их местами.</li> <li>Переставляя элементы, добейтесь, чтобы слева и справа от значка <=> находились соответствующие друг другу элементы.</li> <li>Нажмите кнопку \"Проверить\".  </li></ol></p>";
 	control(inter1, inter2);
