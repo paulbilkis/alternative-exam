@@ -216,7 +216,7 @@ function trainer (inter1, inter2, n){
 /* Обёртка для режима "контроль" */
 function control (inter1, inter2){
     showAnswerIm=false;
-    trainer(inter1, inter2, 5);
+    trainer(inter1, inter2, 6);
 }
 
 /* Обработка меню */
