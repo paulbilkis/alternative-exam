@@ -54,6 +54,71 @@ function draw_a_line_inside (from, to){
 	ctx.stroke();
 }
 
-function draw_triangulated_ntangle (){
+var base = 0;
+function num_pair_brackets(br){
+    var n=0;
+    for (var i=0; i<br.length;i++){
+	if (br[i]==1)
+	    n++;
+    }
+    return n;
+}
 
+ang = 5;
+// возвращает i mod g
+function mod_ar(i, g){
+    if (i >= 0 && i < g)
+	return i;
+    else if (i == g){
+	return 0;
+    }else if(i<g){
+	return g+i;
+    }else if(i>g){
+	return i-Math.floor(i/g)*g;
+    }
+}
+var vertex;
+var n;
+function draw_triang(br){
+    vertex = [];
+    for (var i=0; i<br.length/2 +2; i++){
+	vertex[i] = i;
+    }
+    var n = br.length/2 - 1;
+    draw_triangulated_ntangle(br);
+}
+function draw_triangulated_ntangle (br){
+    ang = vertex.length;
+    if(br == null || br.length==0 || n==0){
+	// треугольник, триангулировать нечего
+	return;
+    }
+    if (closing_bracket(br, 0) == br.length-1){
+	//закрывающая в конце
+	//соединяем две вершины, соседние с базовой
+	
+	console.log(vertex[mod_ar(base-1, ang)], vertex[mod_ar(base+1,ang)], " vertexe connected");
+	console.log("удалена вершина", vertex[base]);
+	vertex.splice(base, 1);
+	n--;
+	base++;
+	draw_triangulated_ntangle(br.slice(1, closing_bracket(br, 0)));
+    }else{
+	// парная скобка не в конце
+	// рисуем отрезок из базовой вершины в вершину базовая+q, где q=числов внутренних пар+2
+	q = num_pair_brackets(br.slice(1, closing_bracket(br, 0)))+2;
+	console.log(vertex[base], vertex[base+q], " vertexes connected");
+	n--;
+	if (mod_ar(base+q, ang) == 2){
+	    console.log("удалена вершина", vertex[base+q-1]);
+	    vertex.splice(base+q-1, 1);
+	    
+
+	}else if(base+q == vertex.length-2){
+	    console.log("удалена вершина", vertex[base+q+1]);
+	    vertex.splice(base+q+1,1);
+	}
+	draw_triangulated_ntangle(br.slice(1, closing_bracket(br, 0)));
+	draw_triangulated_ntangle(br.slice(closing_bracket(br, 0)+1, br.length));
+    }
 }
