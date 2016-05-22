@@ -100,7 +100,7 @@ function draw_triang(br, element, id){
 }
 function draw_triangulated_ntangle (br, vertex){
     ang = vertex.length;
-    //console.log(vertex);
+    console.log(vertex);
 
     if(br == null || br.length==0 || vertex.length == 3){
 	// треугольник, триангулировать нечего
@@ -127,10 +127,10 @@ function draw_triangulated_ntangle (br, vertex){
     }else{
 	// парная скобка не в конце
 	// рисуем отрезок из базовой вершины в вершину базовая+q, где q=числов внутренних пар+2
-	q = num_pair_brackets(br.slice(1, closing_bracket(br, 0)))+2;
+	var q = num_pair_brackets(br.slice(1, closing_bracket(br, 0)))+2;
 //	console.log(vertex[base], vertex[base+q], " vertexes connected");
 	draw_a_line_inside(vertex[base], vertex[base+q]);
-	n--;
+//	n--;
 	/*if (mod_ar(base+q, ang) == 2){
 	    console.log("удалена вершина", vertex[base+q-1]);
 	    vertex.splice(base+q-1, 1);
@@ -140,17 +140,25 @@ function draw_triangulated_ntangle (br, vertex){
 	    console.log("удалена вершина", vertex[base+q+1]);
 	    vertex.splice(base+q+1,1);
 	    }*/
-//	vertex1 = vertex.slice();
-	vertex2 = vertex.slice();
-//	vertex1 = vertex1.slice(base, q+1);
+
+	var vertex1 = vertex.slice();
+	vertex1 = vertex1.slice(base, q+1);
+
+
+	var vertex2 = vertex.slice();
+
 	//console.log(vertex2, q-1);
+	console.log(base, q);
 	vertex2.splice(base+1,q-1);
-	
+	console.log(vertex2,"vertex2");
 	//console.log(vertex1, vertex2);
-	draw_triangulated_ntangle(br.slice(1, closing_bracket(br, 0)), vertex.slice(base, q+1));
+	draw_triangulated_ntangle(br.slice(1, closing_bracket(br, 0)), vertex1);
+
+
+
+
 	
-	
-	draw_triangulated_ntangle(br.slice(closing_bracket(br, 0)+1, br.length), vertex2);
+	draw_triangulated_ntangle(br.slice(closing_bracket(br, 0)+1, br.length), vertex2.slice());
 	return;
     }
     return;

@@ -18,8 +18,8 @@ var interpretations = [
     {s: "Бинарное дерево", demo: null, draw: null},
     {s: "Таблицы Юнга", demo: null, draw: null},
     {s: "Пары вершин", demo: null, draw: null},
-    {s: "Скобочная запись", demo: null, draw: null}/*,
-    {s: "Триангуляция", demo: null, draw: null}*/
+    {s: "Скобочная запись", demo: null, draw: null},
+    {s: "Триангуляция", demo: null, draw: null}
 ];
 
 interpretations[0].draw = draw_a_monoway_canvas;
@@ -27,7 +27,7 @@ interpretations[1].draw = draw_bin_tree_canvas;
 interpretations[2].draw = gen_yung_table;
 interpretations[3].draw = draw_pair_dotes_circle;
 interpretations[4].draw = draw_brackets;
-//interpretations[5].draw = draw_triang;
+interpretations[5].draw = draw_triang;
 
 function gen_menu (){
     var select1 = document.getElementsByName("inter1")[0];
