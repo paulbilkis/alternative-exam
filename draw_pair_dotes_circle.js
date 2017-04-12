@@ -13,18 +13,22 @@ function closing_bracket (br, i){
 
 function draw_a_dot (node, data, ctx){
     ctx.beginPath();
-    ctx.fillStyle = "navy";
+    ctx.fillStyle = "#6600cc";
     ctx.arc(node.x, node.y, radius, 0, Math.PI*2,true);
     ctx.fill();
     ctx.closePath();
     ctx.font = "bold 14px sans";
     ctx.fillStyle="white";
-    ctx.fillText(data, node.x-radius*0.5, node.y+radius*0.5);
+    if (data > 9)
+	ctx.fillText(data, node.x-radius*0.5-4, node.y+radius*0.5-1);
+    else
+	ctx.fillText(data, node.x-radius*0.5+1, node.y+radius*0.5-1);
+   // ctx.fillText(data, node.x-radius*0.5, node.y+radius*0.5);
 }
 
 function draw_pair (ctx, first, second){
     ctx.beginPath();
-    ctx.strokeStyle="navy";
+    ctx.strokeStyle="#6600cc";
     ctx.lineWidth=4;
     ctx.moveTo (first.x, first.y);
     ctx.lineTo (second.x, second.y);
@@ -49,8 +53,8 @@ function draw_doted_circle (br, ctx){
 function draw_pair_dotes_circle (br, element, id){
     var canvas = document.createElement("canvas");
     ctx = canvas.getContext("2d");
-   canvas.width = 300;
-    canvas.height = 300;
+   canvas.width = 250;
+    canvas.height = 250;
     canvas.id = id;
     element.appendChild(canvas);
     draw_doted_circle (br, ctx);
